@@ -1,0 +1,33 @@
+name: nerd-dictation
+version: 0.0.1
+summary: the summary
+description: |
+  The description
+
+confinement: strict
+grade: stable
+base: core22
+
+apps:
+  nerd-dictation:
+    command: ./bin/nerd-dictation
+
+parts:
+  nerd-dictation:
+    plugin: python
+    source: https://github.com/ideasman42/nerd-dictation.git
+    override-build: |
+      python3 package/python/setup.py build
+      python3 package/python/setup.py install
+      pwd
+      which nerd-dictation
+    # build-packages:
+    #   - wget
+    #   - unzip
+    # override-build: |
+    #   pip3 install vosk
+    #   git clone https://github.com/ideasman42/nerd-dictation.git
+    #   cd nerd-dictation
+    #   wget https://alphacephei.com/kaldi/models/vosk-model-small-en-us-0.15.zip
+    #   unzip vosk-model-small-en-us-0.15.zip
+    #   mv vosk-model-small-en-us-0.15 model
