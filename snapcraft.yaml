@@ -14,20 +14,17 @@ apps:
 
 parts:
   nerd-dictation:
-    plugin: python
-    source: https://github.com/ideasman42/nerd-dictation.git
+    plugin: nil
+    build-packages:
+      - wget
+      - unzip
     override-build: |
-      python3 package/python/setup.py build
-      python3 package/python/setup.py install
+      pip3 install vosk
+      git clone https://github.com/ideasman42/nerd-dictation.git
+      cd nerd-dictation
+      wget https://alphacephei.com/kaldi/models/vosk-model-small-en-us-0.15.zip
+      unzip vosk-model-small-en-us-0.15.zip
+      mv vosk-model-small-en-us-0.15 model
       pwd
       which nerd-dictation
-    # build-packages:
-    #   - wget
-    #   - unzip
-    # override-build: |
-    #   pip3 install vosk
-    #   git clone https://github.com/ideasman42/nerd-dictation.git
-    #   cd nerd-dictation
-    #   wget https://alphacephei.com/kaldi/models/vosk-model-small-en-us-0.15.zip
-    #   unzip vosk-model-small-en-us-0.15.zip
-    #   mv vosk-model-small-en-us-0.15 model
+      mkdir $SNAPCRAFT_PART_INSTALL/bin/nerd-dictation
